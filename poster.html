@@ -367,23 +367,20 @@
     <div class="toolbar">
         <h3>📋 婚礼邀请函海报生成器</h3>
         <p style="font-size:13px;color:#666;margin-bottom:12px;">
-            输入你的邀请函网址，生成带QR码的海报，截图发到朋友圈即可
+            📋 网站地址已自动填入，点击"生成QR码"即可（也可手动修改）
         </p>
         <div class="url-input-group">
             <input
                 id="urlInput"
                 type="text"
-                placeholder="输入你的邀请函网址，例如：https://xxx.com/wedding"
+                placeholder="邀请函网址会自动检测，也可手动输入"
                 value=""
             >
             <button onclick="generateQR()">🔄 生成QR码</button>
             <button class="green" onclick="downloadPoster()">📥 保存海报图片</button>
         </div>
         <p class="tip">
-            💡 提示：① 先部署网站获得网址 → ② 输入网址生成QR码 → ③ 点击"保存海报图片" → ④ 发朋友圈
-        </p>
-        <p class="tip">
-            🔗 如果你还没有部署网站，请先看下方的"免费部署教程"
+            💡 操作流程：① 点击"生成QR码"→ ② 点击"保存海报图片"→ ③ 发朋友圈图片
         </p>
     </div>
 
@@ -597,15 +594,33 @@
             }, 3000);
         }
 
-        // ========== 页面加载时自动尝试生成QR ==========
-        window.addEventListener('DOMContentLoaded', () => {
+        // ========== 自动检测网站地址 ==========
+        function autoDetectURL() {
             const urlInput = document.getElementById('urlInput');
-            // 如果URL输入框有值，自动生成
+
+            // 优先读取 ?url= 参数
+            const params = new URLSearchParams(window.location.search);
+            const paramUrl = params.get('url');
+            if (paramUrl) {
+                urlInput.value = paramUrl;
+                return;
+            }
+
+            // 自动检测：当前页面在 /poster.html，邀请函在 /
+            const currentUrl = window.location.href;
+            const siteUrl = currentUrl.replace(/\/poster\.html.*$/, '/');
+            if (siteUrl !== currentUrl) {
+                urlInput.value = siteUrl;
+            }
+        }
+
+        // ========== 页面加载时自动生成QR ==========
+        window.addEventListener('DOMContentLoaded', () => {
+            autoDetectURL();
+            const urlInput = document.getElementById('urlInput');
             if (urlInput.value.trim()) {
                 generateQR();
-            } else {
-                // 设置一个占位提示
-                urlInput.placeholder = '请先部署网站，然后在这里输入你的网址';
+                urlInput.style.background = '#f0fdf4';
             }
         });
 
