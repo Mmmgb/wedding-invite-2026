@@ -1,0 +1,765 @@
+/* 全局样式 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Microsoft YaHei', sans-serif;
+    background-color: #fff8f5;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* 音乐控制 */
+.music-control {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#background-music {
+    display: none;
+}
+
+#music-toggle {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    font-size: 20px;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+}
+
+#music-toggle:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+/* 邀请函头部 */
+.invitation-header {
+    background: linear-gradient(135deg, #ff6b6b, #ff8e53);
+    color: white;
+    text-align: center;
+    padding: 25px 20px;
+    position: relative;
+    overflow: hidden;
+}
+
+.invitation-header::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><circle cx="50" cy="50" r="2" fill="rgba(255,255,255,0.3)"/></svg>');
+    animation: float 20s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0); }
+}
+
+.invitation-header h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 1;
+}
+
+.invitation-header p {
+    font-size: 0.9rem;
+    margin-bottom: 15px;
+    position: relative;
+    z-index: 1;
+}
+
+.invitation-header .date {
+    font-size: 1rem;
+    font-weight: bold;
+    position: relative;
+    z-index: 1;
+}
+
+/* 照片展示区域 - 多图片布局 */
+.photo-gallery {
+    margin: 40px 0;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    position: relative;
+}
+
+.photo-container {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
+}
+
+.photo-container:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 15px 35px rgba(255,107,107,0.3);
+}
+
+.photo-container img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.photo-container:hover img {
+    transform: scale(1.1);
+}
+
+.left-photo,
+.right-photo {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+}
+
+.center-photo {
+    flex: 1.2;
+    min-width: 350px;
+    max-width: 450px;
+}
+
+/* 照片装饰元素 */
+.photo-decoration {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+.photo-decoration.heart {
+    top: 20px;
+    right: 20px;
+}
+
+.photo-decoration.star {
+    top: 20px;
+    left: 20px;
+}
+
+.photo-decoration.flower {
+    bottom: 80px;
+    right: 20px;
+}
+
+.photo-text {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(255,107,107,0.9), rgba(255,142,83,0.9));
+    color: white;
+    padding: 10px 25px;
+    border-radius: 25px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+/* 邀请函内容 - 分散式图片文字布局 */
+.invitation-content {
+    max-width: 1000px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* 内容组容器 */
+.content-group {
+    margin: 60px 0;
+    padding: 30px;
+    position: relative;
+}
+
+/* 左图右文布局 */
+.left-layout {
+    background: linear-gradient(135deg, rgba(255,107,107,0.03), rgba(255,142,83,0.03));
+    border-radius: 20px;
+    margin-left: 0;
+    margin-right: 50px;
+}
+
+/* 右图左文布局 */
+.right-layout {
+    background: linear-gradient(135deg, rgba(255,142,83,0.03), rgba(255,107,107,0.03));
+    border-radius: 20px;
+    margin-left: 50px;
+    margin-right: 0;
+}
+
+/* 居中布局 */
+.center-layout {
+    background: linear-gradient(135deg, rgba(255,107,107,0.05), rgba(255,142,83,0.05));
+    border-radius: 20px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+/* 小型居中布局 */
+.small-center-layout {
+    background: linear-gradient(135deg, rgba(255,107,107,0.02), rgba(255,142,83,0.02));
+    border-radius: 15px;
+    max-width: 700px;
+    margin: 60px auto;
+}
+
+/* 图片文字组合 */
+.photo-with-text {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.left-layout .photo-with-text,
+.center-layout .photo-with-text {
+    flex-direction: row;
+}
+
+.right-layout .photo-with-text {
+    flex-direction: row-reverse;
+}
+
+.small-center-layout .photo-with-text {
+    flex-direction: column;
+    text-align: center;
+}
+
+/* 图片框架构 - 不同尺寸 */
+.photo-frame {
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    transition: all 0.4s ease;
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.photo-frame:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 15px 35px rgba(255,107,107,0.3);
+}
+
+.photo-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.4s ease;
+}
+
+.photo-frame:hover img {
+    transform: scale(1.1);
+}
+
+/* 大尺寸图片 */
+.photo-frame.large {
+    width: 350px;
+    height: 450px;
+}
+
+/* 中等尺寸图片 */
+.photo-frame.medium {
+    width: 300px;
+    height: 380px;
+}
+
+/* 超大尺寸图片 - 缩小到 65% */
+.photo-frame.xlarge {
+    width: 292px; /* 450 * 0.65 = 292.5 */
+    height: 325px; /* 500 * 0.65 = 325 */
+}
+
+/* 小尺寸图片 */
+.photo-frame.small {
+    width: 220px;
+    height: 280px;
+}
+
+/* 图片装饰元素 */
+.photo-decoration {
+    position: absolute;
+    font-size: 2rem;
+    animation: float 3s ease-in-out infinite;
+    z-index: 2;
+}
+
+.photo-decoration.heart {
+    top: 15px;
+    right: 15px;
+}
+
+.photo-decoration.star {
+    top: 15px;
+    left: 15px;
+}
+
+.photo-decoration.flower {
+    bottom: 70px;
+    right: 15px;
+}
+
+.photo-decoration.love {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 3rem;
+}
+
+/* 图片说明文字 */
+.photo-caption {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, rgba(255,107,107,0.9), rgba(255,142,83,0.9));
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    white-space: nowrap;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    z-index: 2;
+}
+
+/* 文字区块 */
+.text-block {
+    flex: 1;
+    min-width: 280px;
+    text-align: left;
+}
+
+.text-block.full-width {
+    min-width: 350px;
+}
+
+/* 特殊内容区域 */
+.special-content {
+    margin-top: 15px;
+    padding: 8px;
+    background: linear-gradient(135deg, rgba(255,107,107,0.08), rgba(255,142,83,0.08));
+    border-radius: 8px;
+    border-left: 2px solid #ff6b6b;
+}
+
+.special-content .highlight-text {
+    color: #ff6b6b;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.special-content p {
+    margin-bottom: 8px !important;
+    font-size: 0.95rem !important;
+    color: #666 !important;
+}
+
+.text-block.compact {
+    text-align: center;
+    max-width: 400px;
+}
+
+.text-block h2 {
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+    font-family: 'SimSun', serif;
+}
+
+.text-block h3 {
+    color: #ff8e53;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+    font-family: 'SimSun', serif;
+}
+
+.text-block p {
+    margin-bottom: 12px;
+    font-size: 1.05rem;
+    font-family: 'SimSun', serif;
+    line-height: 1.8;
+    color: #555;
+}
+
+/* 小组装饰 */
+.small-decorator {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    letter-spacing: 8px;
+    text-align: center;
+}
+
+/* 表单区域 */
+.form-section {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+.form-section h2 {
+    color: #ff6b6b;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 1.8rem;
+}
+
+.form-decoration {
+    font-size: 2.5rem;
+    text-align: center;
+    margin-bottom: 20px;
+    animation: bounce 2s ease-in-out infinite;
+}
+
+#rsvp-form {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    position: relative;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #ffd9d9;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #ff6b6b;
+    box-shadow: 0 0 0 3px rgba(255,107,107,0.1);
+}
+
+.input-decoration {
+    position: absolute;
+    right: 15px;
+    top: 38px;
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.form-footer-decoration {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 1.2rem;
+    color: #ff6b6b;
+    font-weight: bold;
+    animation: shimmer 2s ease-in-out infinite;
+}
+
+.form-side-decorator {
+    position: absolute;
+    bottom: 20px;
+    right: -30px;
+    font-size: 2rem;
+    animation: sway 3s ease-in-out infinite;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 15px;
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.submit-btn:hover {
+    background-color: #ff5252;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+}
+
+.submit-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.submit-btn.btn-loading {
+    background-color: #f08080;
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* 表单消息提示 */
+.form-message {
+    margin-top: 15px;
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    text-align: center;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.form-message-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.form-message-error {
+    background-color: #fce4ec;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
+/* 页脚 */
+.invitation-footer {
+    background-color: #ff6b6b;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+    margin-top: 60px;
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-decoration {
+    font-size: 2rem;
+    margin-bottom: 15px;
+    animation: sway 3s ease-in-out infinite;
+}
+
+.invitation-footer p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.footer-blessing {
+    margin-top: 15px;
+    font-size: 1.3rem;
+    font-style: italic;
+    letter-spacing: 3px;
+    animation: fadeInOut 3s ease-in-out infinite;
+}
+
+.footer-extra-decorator {
+    margin-top: 20px;
+    font-size: 1.5rem;
+    letter-spacing: 10px;
+    animation: sparkle 2s ease-in-out infinite;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .invitation-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    /* 移动端所有布局改为垂直排列 */
+    .left-layout,
+    .right-layout,
+    .center-layout,
+    .small-center-layout {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+    
+    .photo-with-text {
+        flex-direction: column !important;
+        text-align: center;
+    }
+    
+    .text-block {
+        text-align: center !important;
+        min-width: 100%;
+    }
+    
+    .photo-frame.large,
+    .photo-frame.medium,
+    .photo-frame.xlarge {
+        width: 100%;
+        max-width: 350px;
+        height: 400px;
+    }
+    
+    .photo-frame.small {
+        width: 100%;
+        max-width: 250px;
+        height: 300px;
+    }
+    
+    .content-group {
+        padding: 20px;
+        margin: 40px 0;
+    }
+    
+    #rsvp-form {
+        padding: 20px;
+    }
+    
+    .form-side-decorator {
+        display: none;
+    }
+}
+
+/* 动画效果 */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+@keyframes sway {
+    0%, 100% {
+        transform: rotate(-5deg);
+    }
+    50% {
+        transform: rotate(5deg);
+    }
+}
+
+@keyframes shimmer {
+    0%, 100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.7;
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% {
+        opacity: 0.7;
+    }
+    50% {
+        opacity: 1;
+    }
+}
+
+@keyframes sparkle {
+    0%, 100% {
+        transform: scale(1) rotate(0deg);
+        opacity: 0.8;
+    }
+    50% {
+        transform: scale(1.1) rotate(10deg);
+        opacity: 1;
+    }
+}
+
+.invitation-header, .photo-gallery, .invitation-content, .form-section, .invitation-footer {
+    animation: fadeIn 1s ease-out;
+}
+
+/* 内容组独立动画 */
+.content-group {
+    animation: fadeInUp 1.2s ease-out both;
+}
+
+.content-group:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.content-group:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.content-group:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.content-group:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #ff6b6b;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #ff5252;
+}

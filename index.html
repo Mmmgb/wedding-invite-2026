@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我们结婚啦 - 王老爷子 ❤️ 赵大娘</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💒</text></svg>">
+    <link rel="stylesheet" href="style.css">
+    <!-- 微信JS-SDK（可选，用于微信内自动播放音乐） -->
+    <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script>
+</head>
+<body>
+    <!-- 音乐控制 -->
+    <div class="music-control">
+        <audio id="background-music" loop preload="auto">
+            <source src="./yinyuegengqu/rUBoP9-好运来-祖海.mp3" type="audio/mpeg">
+        </audio>
+        <button id="music-toggle" title="音乐开关">🔊</button>
+    </div>
+
+    <!-- 邀请函头部 -->
+    <header class="invitation-header">
+        <h1>我们结婚啦！</h1>
+        <p>赵大娘 ❤️ 王老爷子</p>
+        <p>诚挚邀请您参加我们的婚礼</p>
+        <div class="date">2026年12月12日</div>
+    </header>
+
+    <!-- 照片展示区域 -->
+    <section class="photo-gallery">
+        <div class="photo-container left-photo">
+            <img src="./yinyuegengqu/结婚图2.png" alt="婚纱照1">
+            <div class="photo-decoration heart">❤️</div>
+        </div>
+        <div class="photo-container right-photo">
+            <img src="./yinyuegengqu/结婚图3.png" alt="婚纱照2">
+            <div class="photo-decoration star">🌸</div>
+        </div>
+    </section>
+
+    <!-- 邀请函内容 -->
+    <section class="invitation-content">
+        <div class="content-group left-layout">
+            <div class="photo-with-text">
+                <div class="photo-frame large">
+                    <img src="./yinyuegengqu/xaioai.jpg" alt="婚纱照3">
+                    <div class="photo-decoration heart">❤️</div>
+                    <div class="photo-caption">美好时光 · 相遇</div>
+                </div>
+                <div class="text-block">
+                    <h2>亲爱的朋友</h2>
+                    <p>我们结婚了！</p>
+                    <p>诚挚邀请您来参加我们的婚礼</p>
+                    <p>感谢您一直以来的陪伴与支持</p>
+                    <div class="small-decorator">🌸 💕 🌸</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group right-layout">
+            <div class="photo-with-text">
+                <div class="photo-frame medium">
+                    <img src="./yinyuegengqu/sss.jpg" alt="婚纱照4">
+                    <div class="photo-decoration star">⭐</div>
+                    <div class="photo-caption">幸福时刻 · 相知</div>
+                </div>
+                <div class="text-block">
+                    <h3>感恩有你</h3>
+                    <p>在这个特别的日子里</p>
+                    <p>希望您能来见证我们人生中最幸福的时刻</p>
+                    <p>您的到来会让我们的婚礼更加圆满</p>
+                    <div class="small-decorator">✨ 💝 ✨</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group center-layout">
+            <div class="photo-with-text">
+                <div class="photo-frame xlarge">
+                    <img src="./yinyuegengqu/mmm.jpg" alt="婚礼现场">
+                    <div class="photo-decoration flower">🌹</div>
+                    <div class="photo-caption">浪漫瞬间 · 相守</div>
+                </div>
+                <div class="text-block full-width">
+                    <h3>婚礼信息</h3>
+                    <p><strong>时间：</strong>2026年12月12日 12:00</p>
+                    <p><strong>地点：</strong>12酒店12厅</p>
+                    <p>期待与您分享这份喜悦</p>
+                    <p>一起创造美好的回忆</p>
+                    <div class="decorative-divider">
+                        <span>🌹</span><span>💐</span><span>🌹</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-group small-center-layout">
+            <div class="photo-with-text">
+                <div class="photo-frame small">
+                    <img src="./yinyuegengqu/婚纱照1.png" alt="装饰图">
+                    <div class="photo-decoration love">💗</div>
+                </div>
+                <div class="text-block compact">
+                    <h3>诚挚邀请</h3>
+                    <p>诚邀您拨冗出席</p>
+                    <p>共享我们的新婚之喜！</p>
+                    <p>执子之手，与子偕老</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="special-content">
+            <p class="highlight-text">💐 婚礼流程 💐</p>
+            <p>11:30 - 嘉宾签到 👉 亲朋好友到场登记、领取伴手礼，有序入场就座</p>
+            <p>12:00 - 婚礼仪式 👉 新郎新娘入场、交换戒指、宣誓、致辞、合影</p>
+            <p>12:30 - 婚宴开始 👉 正式开席用餐，新郎新娘逐桌敬酒，感谢各位来宾</p>
+            <p>14:00 - 互动游戏 👉 现场趣味小游戏、抽奖环节，活跃气氛，送出小礼品</p>
+        </div>
+    </section>
+
+    <!-- 表单区域 -->
+    <section class="form-section">
+        <h2>请填写您的信息</h2>
+        <div class="form-decoration">💝</div>
+        <form id="rsvp-form">
+            <div class="form-group">
+                <label for="name">姓名</label>
+                <input type="text" id="name" name="name" required
+                       placeholder="请输入您的姓名" maxlength="50" autocomplete="name">
+                <span class="input-decoration">✏️</span>
+            </div>
+            <div class="form-group">
+                <label for="relationship">与新郎/新娘关系</label>
+                <input type="text" id="relationship" name="relationship" required
+                       placeholder="例如：朋友、同学、亲戚..." maxlength="50">
+                <span class="input-decoration">💑</span>
+            </div>
+            <button type="submit" class="submit-btn" id="submit-btn">确定</button>
+        </form>
+        <div class="form-footer-decoration">🎊 期待您的光临 🎊</div>
+        <div class="form-side-decorator">🌸</div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer class="invitation-footer">
+        <div class="footer-decoration">💕 🌸 💕</div>
+        <p>期待您的到来！</p>
+        <p>新郎：王老爷子 ❤️ 新娘：赵大娘</p>
+        <div class="footer-blessing">执子之手，与子偕老</div>
+        <div class="footer-extra-decorator">🦋 ✨ 🦋</div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

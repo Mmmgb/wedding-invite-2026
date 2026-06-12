@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>婚礼邀请函海报 - QR码</title>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            font-family: 'Microsoft YaHei', 'PingFang SC', sans-serif;
+        }
+
+        .toolbar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 750px;
+        }
+
+        .toolbar h3 {
+            margin-bottom: 12px;
+            color: #c41e3a;
+        }
+
+        .toolbar .url-input-group {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar input {
+            flex: 1;
+            min-width: 250px;
+            padding: 10px 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        .toolbar input:focus {
+            border-color: #c41e3a;
+        }
+
+        .toolbar button {
+            padding: 10px 24px;
+            background: #c41e3a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            white-space: nowrap;
+        }
+
+        .toolbar button:hover {
+            background: #a01830;
+        }
+
+        .toolbar button.green {
+            background: #27ae60;
+        }
+
+        .toolbar button.green:hover {
+            background: #1e8449;
+        }
+
+        .toolbar .tip {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+
+        /* ========== 海报主体 ========== */
+        #poster {
+            width: 750px;
+            min-height: 1334px; /* iPhone 6/7/8 屏幕比例，适合朋友圈 */
+            background: linear-gradient(180deg, #fff8f5 0%, #ffe8e0 30%, #fff0ed 100%);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 30px rgba(0,0,0,0.15);
+        }
+
+        /* 顶部红色横幅 */
+        .poster-header {
+            background: linear-gradient(135deg, #c41e3a 0%, #e8455b 50%, #c41e3a 100%);
+            color: white;
+            text-align: center;
+            padding: 50px 40px 45px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .poster-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.08) 1px, transparent 1px);
+            background-size: 30px 30px;
+            animation: driftslow 20s linear infinite;
+        }
+
+        @keyframes driftslow {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(30px, 30px); }
+        }
+
+        .poster-header .double-xi {
+            font-size: 60px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            margin-bottom: 5px;
+        }
+
+        .poster-header h1 {
+            font-size: 36px;
+            letter-spacing: 6px;
+            position: relative;
+            z-index: 1;
+            margin: 10px 0;
+        }
+
+        .poster-header .couple-names {
+            font-size: 28px;
+            letter-spacing: 4px;
+            position: relative;
+            z-index: 1;
+            margin: 15px 0;
+            font-weight: bold;
+        }
+
+        .poster-header .subtitle {
+            font-size: 16px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+            letter-spacing: 3px;
+            margin-top: 10px;
+        }
+
+        /* 金色装饰线 */
+        .gold-divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .gold-divider span {
+            display: inline-block;
+            width: 80px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #d4a574, transparent);
+            vertical-align: middle;
+        }
+
+        .gold-divider .icon {
+            margin: 0 15px;
+            font-size: 20px;
+            color: #d4a574;
+        }
+
+        /* 照片展示区 */
+        .poster-photos {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 0 40px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .poster-photo-item {
+            width: 200px;
+            height: 260px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            border: 3px solid white;
+            position: relative;
+            background: #f0f0f0;
+        }
+
+        .poster-photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .poster-photo-item .photo-label {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(196, 30, 58, 0.85);
+            color: white;
+            padding: 4px 16px;
+            border-radius: 12px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        /* 婚礼信息 */
+        .poster-info {
+            text-align: center;
+            padding: 20px 40px;
+        }
+
+        .poster-info h3 {
+            font-size: 22px;
+            color: #c41e3a;
+            margin-bottom: 20px;
+            letter-spacing: 3px;
+        }
+
+        .poster-info .info-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 12px 0;
+            font-size: 16px;
+            color: #555;
+            gap: 10px;
+        }
+
+        .poster-info .info-row .label {
+            color: #c41e3a;
+            font-weight: bold;
+            min-width: 50px;
+        }
+
+        .poster-info .blessing {
+            margin: 25px 0;
+            font-size: 18px;
+            color: #c41e3a;
+            letter-spacing: 4px;
+            font-style: italic;
+        }
+
+        /* QR码区域 */
+        .poster-qr-section {
+            text-align: center;
+            padding: 10px 40px 40px;
+            margin-top: 10px;
+        }
+
+        .poster-qr-section .qr-title {
+            font-size: 17px;
+            color: #c41e3a;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+        }
+
+        .qr-container {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .qr-box {
+            background: white;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            display: inline-block;
+            border: 2px solid #f0d5d5;
+        }
+
+        .qr-box canvas,
+        .qr-box img {
+            display: block;
+        }
+
+        .qr-instruction {
+            margin-top: 18px;
+            font-size: 14px;
+            color: #888;
+            letter-spacing: 1px;
+        }
+
+        .qr-instruction .highlight {
+            color: #c41e3a;
+            font-weight: bold;
+        }
+
+        /* 底部 */
+        .poster-footer {
+            text-align: center;
+            padding: 25px;
+            background: linear-gradient(180deg, transparent, rgba(196,30,58,0.05));
+        }
+
+        .poster-footer p {
+            font-size: 13px;
+            color: #bbb;
+            letter-spacing: 2px;
+        }
+
+        /* ========== 响应式 ========== */
+        @media (max-width: 800px) {
+            #poster {
+                width: 100%;
+                min-height: auto;
+            }
+
+            .poster-header h1 {
+                font-size: 24px;
+            }
+
+            .poster-header .couple-names {
+                font-size: 22px;
+            }
+
+            .poster-photos {
+                gap: 10px;
+                padding: 0 20px;
+            }
+
+            .poster-photo-item {
+                width: 140px;
+                height: 190px;
+            }
+        }
+
+        /* 打印样式 */
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            .toolbar {
+                display: none;
+            }
+            #poster {
+                box-shadow: none;
+                page-break-after: always;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 工具栏 ===== -->
+    <div class="toolbar">
+        <h3>📋 婚礼邀请函海报生成器</h3>
+        <p style="font-size:13px;color:#666;margin-bottom:12px;">
+            输入你的邀请函网址，生成带QR码的海报，截图发到朋友圈即可
+        </p>
+        <div class="url-input-group">
+            <input
+                id="urlInput"
+                type="text"
+                placeholder="输入你的邀请函网址，例如：https://xxx.com/wedding"
+                value=""
+            >
+            <button onclick="generateQR()">🔄 生成QR码</button>
+            <button class="green" onclick="downloadPoster()">📥 保存海报图片</button>
+        </div>
+        <p class="tip">
+            💡 提示：① 先部署网站获得网址 → ② 输入网址生成QR码 → ③ 点击"保存海报图片" → ④ 发朋友圈
+        </p>
+        <p class="tip">
+            🔗 如果你还没有部署网站，请先看下方的"免费部署教程"
+        </p>
+    </div>
+
+    <!-- ===== 海报 ===== -->
+    <div id="poster">
+        <!-- 顶部 -->
+        <div class="poster-header">
+            <div class="double-xi">囍</div>
+            <h1>我 们 结 婚 啦</h1>
+            <div class="couple-names">王老爷子 ❤️ 赵大娘</div>
+            <div class="subtitle">诚 挚 邀 请 您 参 加 我 们 的 婚 礼</div>
+        </div>
+
+        <div class="gold-divider">
+            <span></span><span class="icon">💐</span><span></span>
+        </div>
+
+        <!-- 照片展示 -->
+        <div class="poster-photos" id="posterPhotos">
+            <!-- 照片会由JS动态加载 -->
+        </div>
+
+        <!-- 婚礼信息 -->
+        <div class="poster-info">
+            <h3>💒 婚 礼 信 息 💒</h3>
+            <div class="info-row">
+                <span class="label">📅 日期：</span>
+                <span>2026年12月12日（星期六）</span>
+            </div>
+            <div class="info-row">
+                <span class="label">⏰ 时间：</span>
+                <span>中午 12:00</span>
+            </div>
+            <div class="info-row">
+                <span class="label">📍 地点：</span>
+                <span>12酒店 12厅</span>
+            </div>
+            <div class="blessing">
+                ✨ 期待您的到来，见证我们的幸福时刻 ✨
+            </div>
+        </div>
+
+        <div class="gold-divider">
+            <span></span><span class="icon">💝</span><span></span>
+        </div>
+
+        <!-- QR码 -->
+        <div class="poster-qr-section">
+            <p class="qr-title">📱 长按识别二维码 · 查看精美邀请函</p>
+            <div class="qr-container">
+                <div class="qr-box" id="qrCodeBox">
+                    <div id="qrcode" style="width:200px;height:200px;"></div>
+                </div>
+            </div>
+            <p class="qr-instruction">
+                🔍 <span class="highlight">长按识别</span>二维码，查看完整邀请函<br>
+                并可在线填写出席信息
+            </p>
+        </div>
+
+        <!-- 底部 -->
+        <div class="poster-footer">
+            <p>执子之手 · 与子偕老</p>
+        </div>
+    </div>
+
+    <!-- ===== 部署教程区域 ===== -->
+    <div style="background:white;border-radius:12px;padding:20px;margin-top:20px;max-width:750px;width:100%;box-shadow:0 2px 12px rgba(0,0,0,0.1);">
+        <h3 style="color:#c41e3a;margin-bottom:15px;">🚀 免费部署教程（3种方式，任选其一）</h3>
+
+        <div style="background:#f0fdf4;padding:15px;border-radius:8px;margin-bottom:12px;">
+            <strong>方式一：Vercel（推荐 · 最简单）</strong>
+            <ol style="margin:8px 0;font-size:14px;color:#555;padding-left:20px;">
+                <li>访问 <a href="https://vercel.com" target="_blank">vercel.com</a>，用 GitHub 账号登录（免费注册）</li>
+                <li>把 <code>static-deploy</code> 文件夹上传到 GitHub 仓库</li>
+                <li>在 Vercel 中导入该仓库，一键部署</li>
+                <li>获得网址如：<code>https://你的项目.vercel.app</code></li>
+            </ol>
+        </div>
+
+        <div style="background:#fff7ed;padding:15px;border-radius:8px;margin-bottom:12px;">
+            <strong>方式二：GitHub Pages（免费 · 永久有效）</strong>
+            <ol style="margin:8px 0;font-size:14px;color:#555;padding-left:20px;">
+                <li>注册 <a href="https://github.com" target="_blank">GitHub</a> 账号</li>
+                <li>创建仓库，上传 <code>static-deploy</code> 文件夹里的文件</li>
+                <li>Settings → Pages → 选择分支 → Save</li>
+                <li>获得网址如：<code>https://你的用户名.github.io/仓库名</code></li>
+            </ol>
+        </div>
+
+        <div style="background:#fef2f2;padding:15px;border-radius:8px;margin-bottom:12px;">
+            <strong>方式三：Netlify（免费 · 拖拽部署）</strong>
+            <ol style="margin:8px 0;font-size:14px;color:#555;padding-left:20px;">
+                <li>访问 <a href="https://netlify.com" target="_blank">netlify.com</a>，注册账号</li>
+                <li>把 <code>static-deploy</code> 文件夹直接拖到 Netlify 页面</li>
+                <li>自动部署完成，获得网址</li>
+            </ol>
+        </div>
+
+        <p style="font-size:13px;color:#888;margin-top:8px;">
+            💡 部署获得网址后，回到本页面输入网址 → 生成QR码 → 保存海报图片 → 发朋友圈！
+        </p>
+    </div>
+
+    <script>
+        // ========== 海报照片动态加载 ==========
+        const photoList = [
+            { src: './yinyuegengqu/结婚图2.png', label: '婚纱照' },
+            { src: './yinyuegengqu/结婚图3.png', label: '婚纱照' },
+            { src: './yinyuegengqu/mmm.jpg', label: '幸福瞬间' }
+        ];
+
+        const photosContainer = document.getElementById('posterPhotos');
+        photoList.forEach(photo => {
+            const div = document.createElement('div');
+            div.className = 'poster-photo-item';
+            div.innerHTML = `
+                <img src="${photo.src}" alt="${photo.label}" onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22260%22><rect fill=%22%23fce4ec%22 width=%22200%22 height=%22260%22/><text x=%22100%22 y=%22135%22 text-anchor=%22middle%22 font-size=%2240%22>💒</text></svg>'">
+                <div class="photo-label">${photo.label}</div>
+            `;
+            photosContainer.appendChild(div);
+        });
+
+        // ========== QR码生成 ==========
+        let qrInstance = null;
+
+        function generateQR() {
+            const url = document.getElementById('urlInput').value.trim();
+            if (!url) {
+                alert('请先输入你的邀请函网址！\n\n如果还没有部署网站，请看下方的部署教程。');
+                return;
+            }
+
+            // 清除旧的QR码
+            const qrContainer = document.getElementById('qrcode');
+            qrContainer.innerHTML = '';
+
+            // 生成新的QR码
+            qrInstance = new QRCode(qrContainer, {
+                text: url,
+                width: 200,
+                height: 200,
+                colorDark: '#c41e3a',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M
+            });
+
+            // 稍微延迟后获取canvas，添加样式
+            setTimeout(() => {
+                const canvas = qrContainer.querySelector('canvas');
+                if (canvas) {
+                    canvas.style.display = 'block';
+                }
+            }, 100);
+        }
+
+        // ========== 海报下载 ==========
+        function downloadPoster() {
+            const qrCanvas = document.querySelector('#qrcode canvas');
+            if (!qrCanvas) {
+                alert('请先生成QR码！输入网址后点击"生成QR码"按钮。');
+                return;
+            }
+
+            const poster = document.getElementById('poster');
+
+            html2canvas(poster, {
+                scale: 2,          // 高清输出
+                useCORS: true,     // 跨域图片
+                allowTaint: true,
+                backgroundColor: '#fff8f5'
+            }).then(canvas => {
+                // 转换为下载链接
+                const link = document.createElement('a');
+                link.download = '婚礼邀请函海报.png';
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+
+                // 提示
+                showToast('✅ 海报已保存！发到朋友圈即可');
+            }).catch(err => {
+                console.error('生成海报失败:', err);
+                alert('海报生成失败，请刷新页面重试。\n\n如果图片加载失败，请确保在服务器环境下打开此页面。');
+            });
+        }
+
+        // ========== Toast 提示 ==========
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                top: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: #27ae60;
+                color: white;
+                padding: 14px 28px;
+                border-radius: 25px;
+                font-size: 16px;
+                z-index: 9999;
+                box-shadow: 0 4px 20px rgba(39,174,96,0.4);
+                animation: fadeInDown 0.4s ease;
+            `;
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.5s';
+                setTimeout(() => toast.remove(), 500);
+            }, 3000);
+        }
+
+        // ========== 页面加载时自动尝试生成QR ==========
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlInput = document.getElementById('urlInput');
+            // 如果URL输入框有值，自动生成
+            if (urlInput.value.trim()) {
+                generateQR();
+            } else {
+                // 设置一个占位提示
+                urlInput.placeholder = '请先部署网站，然后在这里输入你的网址';
+            }
+        });
+
+        // ========== 添加淡入动画 ==========
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeInDown {
+                from {
+                    opacity: 0;
+                    transform: translateX(-50%) translateY(-20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(-50%) translateY(0);
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
